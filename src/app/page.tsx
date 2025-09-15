@@ -94,7 +94,7 @@ export default function Home() {
               <p>
                 WhatsApp:{" "}
                 <a href="https://wa.me/921866613" target="_blank">
-                  Mi número
+                  Directo a WhatsApp
                 </a>
               </p>
             </div>
