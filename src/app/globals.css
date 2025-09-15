@@ -1,0 +1,385 @@
+/* ===== FUENTES ===== */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght=400;600;800&family=Inter:wght=300;400;600&display=swap');
+
+/* ===== VARIABLES ===== */
+:root {
+  --bg: #ffffff;
+  --black: #000000;
+  --red: #ff1b1b;
+  --white: #ffffff;
+  --gray: #f5f5f5;
+}
+
+/* ===== FONDO BLANCO ELEGANTE ===== */
+body {
+  background: var(--bg);
+  color: var(--black);
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ===== ANIMACIÓN DE APARICIÓN DE LETRAS ===== */
+.appear-wave {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: appearWave 1s ease-out forwards;
+}
+
+@keyframes appearWave {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.appear-wave:nth-child(1) { animation-delay: 0.1s; }
+.appear-wave:nth-child(2) { animation-delay: 0.2s; }
+.appear-wave:nth-child(3) { animation-delay: 0.3s; }
+.appear-wave:nth-child(4) { animation-delay: 0.4s; }
+.appear-wave:nth-child(5) { animation-delay: 0.5s; }
+
+/* ===== NAVBAR MINIMALISTA ===== */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 1.2rem 0;
+  transition: all 0.3s ease;
+}
+
+.nav-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 1rem;
+}
+
+.brand {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 800;
+  font-size: 1.8rem; /* ✅ más grande */
+  color: var(--black);
+  letter-spacing: 2px;
+  opacity: 0;
+  animation: fadeInRight 1s ease-out forwards;
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.brand .name {
+  color: var(--red);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  font-weight: 600;
+  font-size: 1.1rem; /* ✅ más grande */
+  letter-spacing: 1px;
+}
+
+.nav-links a {
+  color: var(--black);
+  text-decoration: none; /* ✅ sin subrayado */
+  position: relative;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--red);
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* ===== BOTÓN DE MÚSICA ELEGANTE ===== */
+.btn-musica {
+  background: transparent;
+  border: 1px solid var(--black);
+  color: var(--black);
+  padding: 0.5rem;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out 0.5s forwards;
+}
+
+.btn-musica:hover {
+  background: var(--red);
+  color: var(--white);
+  border-color: var(--red);
+  transform: scale(1.1);
+}
+
+.btn-musica.activo {
+  background: var(--red);
+  color: var(--white);
+  border-color: var(--red);
+}
+
+/* ===== HERO ELEGANTE ===== */
+.hero {
+  text-align: center;
+  padding: 6rem 0;
+  background: var(--gray);
+  border-radius: 20px;
+  margin: 2rem auto;
+  max-width: 1000px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.hero .tag {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1rem;
+  color: var(--red);
+  display: block;
+  margin-bottom: 1rem;
+  letter-spacing: 2px;
+  opacity: 0;
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  color: var(--black);
+  letter-spacing: 2px;
+  opacity: 0;
+  animation: fadeInUp 1s ease-out 0.2s forwards;
+}
+
+.hero .name {
+  color: var(--red);
+}
+
+.lead {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  color: #555;
+  opacity: 0;
+  animation: fadeInUp 1s ease-out 0.4s forwards;
+}
+
+.cta {
+  margin-top: 2rem;
+  opacity: 0;
+  animation: fadeInUp 1s ease-out 0.6s forwards;
+}
+
+/* ===== BOTONES ELEGANTES (SIN SUBRAYADO) ===== */
+.btn-glow,
+.btn-cyan,
+.btn-glow-white {
+  text-decoration: none; /* ✅ sin subrayado */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2rem;
+  border: 1px solid var(--black);
+  color: var(--black);
+  font-weight: 600;
+  border-radius: 8px;
+  background: transparent;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.btn-glow:hover {
+  background: var(--red);
+  color: var(--white);
+  border-color: var(--red);
+  transform: scale(1.05);
+}
+
+.btn-cyan {
+  border-color: var(--black);
+  color: var(--black);
+}
+
+.btn-cyan:hover {
+  background: var(--black);
+  color: var(--white);
+}
+
+.btn-glow-white {
+  border-color: var(--black);
+  color: var(--black);
+}
+
+.btn-glow-white:hover {
+  background: var(--red);
+  color: var(--white);
+  border-color: var(--red);
+  transform: scale(1.05);
+}
+
+/* ===== SECCIONES ELEGANTES ===== */
+.section {
+  padding: 5rem 0;
+}
+
+.section h2 {
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2.5rem;
+  color: var(--black);
+  margin-bottom: 2rem;
+  letter-spacing: 2px;
+  opacity: 0;
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+.card {
+  background: var(--gray);
+  padding: 2.5rem;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+  opacity: 0;
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* ===== TEXTO DE REDES (MEJOR TIPOGRAFÍA Y TAMAÑO) ===== */
+.card p {
+  font-size: 1.1rem; /* ✅ más grande */
+  font-family: 'Inter', sans-serif;
+  color: #333;
+  line-height: 1.8;
+}
+
+.card a {
+  color: var(--red);
+  text-decoration: none; /* ✅ sin subrayado */
+  font-weight: 600;
+}
+
+.card a:hover {
+  text-decoration: underline; /* ✅ solo al pasar el mouse */
+}
+
+/* ===== CARRUSEL ELEGANTE ===== */
+.carrusel-horizontal {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+  overflow: hidden;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  aspect-ratio: 16 / 9;
+  min-height: 450px;
+  opacity: 0;
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+.carrusel-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.6);
+  color: var(--white);
+  font-family: 'Orbitron', sans-serif;
+  text-align: center;
+  padding: 1rem;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+}
+
+/* ===== FOOTER ELEGANTE ===== */
+footer {
+  background: var(--gray);
+  padding: 2rem 0;
+  text-align: center;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+footer .badge {
+  font-weight: 600;
+  margin-right: 1rem;
+  color: var(--red);
+}
+
+footer .name {
+  color: var(--black);
+}
+
+/* ===== GRID DE BOTONES ELEGANTE ===== */
+.buttons-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.buttons-grid .btn-glow {
+  font-size: 1.1rem;
+  padding: 1rem 2rem;
+  min-width: 200px;
+  text-align: center;
+}
+
+.buttons-grid .btn-glow:hover {
+  background: var(--red);
+  color: var(--white);
+  transform: scale(1.05);
+}
+
+/* ===== ANIMACIONES ===== */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.fade-in { animation: fadeIn 1s ease-out forwards; }
+
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.fade-in-up { animation: fadeInUp 1s ease-out forwards; }
+
+@keyframes fadeInRight { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
+.fade-in-right { animation: fadeInRight 1s ease-out forwards; }
+
+/* ===== UTILIDADES ===== */
+.appear-wave { animation: fadeInUp 1s ease-out forwards; }

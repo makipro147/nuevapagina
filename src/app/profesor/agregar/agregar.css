@@ -1,0 +1,85 @@
+.agregar-container {
+  min-height: 100vh;
+  background: #f9f9f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.agregar-card {
+  background: white;
+  padding: 2.5rem 2rem;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+}
+
+.agregar-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  letter-spacing: 1px;
+}
+
+.agregar-input {
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  font-size: 1rem;
+  background: white;
+  color: black;
+  transition: border 0.3s ease;
+  box-sizing: border-box;
+}
+
+.agregar-input:focus {
+  border-color: #ff1b1b;
+  outline: none;
+}
+
+.agregar-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.agregar-btn {
+  flex: 1;
+  padding: 1rem;
+  background: black;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.agregar-btn:hover {
+  background: #ff1b1b;
+  transform: scale(1.02);
+}
+
+.agregar-btn-outline {
+  flex: 1;
+  padding: 1rem;
+  background: transparent;
+  color: black;
+  border: 1px solid black;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.agregar-btn-outline:hover {
+  background: #ff1b1b;
+  color: white;
+  border-color: #ff1b1b;
+}
