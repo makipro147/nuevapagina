@@ -196,4 +196,5 @@ export default function AlumnoPage() {
 }
 
 // prueba 01 develop rama
-// afFE
+
+// comentario error 
