@@ -150,7 +150,7 @@ export default function ProfesorPage() {
         <div className="profesor-buttons-top">
           <button onClick={handleAgregar} className="profesor-btn">Agregar alumno</button>
           <button onClick={handleVerClases} className="profesor-btn">Ver clases</button>
-          <button onClick={handleSalir} className="profesor-btn-outline">Salir</button>
+          <button onClick={handleSalir} className="profesor-btn">Salir</button>
         </div>
 
         <table className="profesor-table">
@@ -174,14 +174,14 @@ export default function ProfesorPage() {
                   {editando === a.id ? (
                     <>
                       <button onClick={() => handleGuardar(a.id, a.usuario_id)} className="profesor-btn-small">Guardar</button>
-                      <button onClick={() => setEditando(null)} className="profesor-btn-small-outline">Cancelar</button>
+                      <button onClick={() => setEditando(null)} className="profesor-btn-small">Cancelar</button>
                     </>
                   ) : (
                     <>
                       <button onClick={() => handleEditar(a)} className="profesor-btn-small">Editar</button>
                       <button onClick={() => abrirModalPuntos("subir", a.id, a.puntos || 0)} className="profesor-btn-small">+</button>
                       <button onClick={() => abrirModalPuntos("bajar", a.id, a.puntos || 0)} className="profesor-btn-small">-</button>
-                      <button onClick={() => handleEliminar(a.id, a.usuario_id)} className="profesor-btn-small-danger">Eliminar</button>
+                      <button onClick={() => handleEliminar(a.id, a.usuario_id)} className="profesor-btn-small">Eliminar</button>
                     </>
                   )}
                 </td>
@@ -204,7 +204,7 @@ export default function ProfesorPage() {
             />
             <div className="modal-actions">
               <button onClick={aplicarPuntos} className="profesor-btn">Aplicar</button>
-              <button onClick={cerrarModalPuntos} className="profesor-btn-outline">Cancelar</button>
+              <button onClick={cerrarModalPuntos} className="profesor-btn">Cancelar</button>
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import "./musicaFondo.css"; // 👈 agregamos estilos propios
 
 export default function MusicaFondo() {
   const [playing, setPlaying] = useState(false);
@@ -26,7 +27,7 @@ export default function MusicaFondo() {
   return (
     <button
       onClick={toggleMusica}
-      className={`btn-musica ${playing ? 'activo' : ''}`}
+      className={`btn-musica-estilo ${playing ? 'activo' : ''}`}
       title={playing ? "Pausar música" : "Reproducir música"}
     >
       {playing ? "🎵" : "🎶"}

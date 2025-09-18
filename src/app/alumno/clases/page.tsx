@@ -1,49 +1,102 @@
 "use client";
-import { useSearchParams, useRouter } from "next/navigation";
+
+import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import "./clases.css";
 
+/* ===== 1º-3º ===== */
 const clasesGrados1a3 = [
-  "Componentes de una PC",
-  "Atajos de teclado",
-  "Explorador de archivos y compresión en RAR",
-  "Cómo elegir y presentar un tema con Canva",
-  "Uso completo de Canva Presentaciones",
-  "Creación de logo con Canva para tu tema",
-  "Edición de video con Canva (1 minuto)",
-  "Hardware y Software",
-  "Sistema Operativo Windows",
-  "Introducción a Internet",
-  "Navegadores Web",
-  "Correo Electrónico",
-  "Introducción a Word",
-  "Introducción a Excel",
-  "Introducción a PowerPoint",
-  "Archivos y Carpetas",
-  "Teclado y Ratón",
-  "Impresoras y Periféricos",
-  "Seguridad en la Web",
-  "Etiqueta Digital",
+  { nombre: "Componentes de una PC", ruta: "componentes-pc" },
+  { nombre: "Atajos de teclado", ruta: "atajos-teclado" },
+  { nombre: "Explorador de archivos y compresión en RAR", ruta: "explorador-archivos-rar" },
+  { nombre: "Cómo elegir y presentar un tema con Canva", ruta: "canva-presentar-tema" },
+  { nombre: "Uso completo de Canva Presentaciones", ruta: "canva-presentaciones" },
+  { nombre: "Creación de logo con Canva para tu tema", ruta: "canva-logo" },
+  { nombre: "Edición de video con Canva (1 minuto)", ruta: "canva-video" },
+  { nombre: "Hardware y Software", ruta: "hardware-software" },
+  { nombre: "Sistema Operativo Windows", ruta: "sistema-windows" },
+  { nombre: "Introducción a Internet", ruta: "introduccion-internet" },
+  { nombre: "Navegadores Web", ruta: "navegadores-web" },
+  { nombre: "Correo Electrónico", ruta: "correo-electronico" },
+  { nombre: "Introducción a Word", ruta: "introduccion-word" },
+  { nombre: "Introducción a Excel", ruta: "introduccion-excel" },
+  { nombre: "Introducción a PowerPoint", ruta: "introduccion-powerpoint" },
+  { nombre: "Archivos y Carpetas", ruta: "archivos-carpetas" },
+  { nombre: "Teclado y Ratón", ruta: "teclado-raton" },
+  { nombre: "Impresoras y Periféricos", ruta: "impresoras-perifericos" },
+  { nombre: "Seguridad en la Web", ruta: "seguridad-web" },
+  { nombre: "Etiqueta Digital", ruta: "etiqueta-digital" },
+];
+
+/* ===== 4º-5º ===== */
+const clasesGrados4y5 = [
+  { nombre: "Edición de video avanzada con Premiere", ruta: "premiere-avanzado" },
+  { nombre: "Animación 2D con After Effects", ruta: "after-effects-2d" },
+  { nombre: "Diseño de interfaces con Figma", ruta: "figma-ui" },
+  { nombre: "JavaScript interactivo", ruta: "javascript-interactivo" },
+  { nombre: "Intro a React y componentes", ruta: "react-componentes" },
+  { nombre: "Bases de datos con SQLite", ruta: "sqlite-bases-datos" },
+  { nombre: "Hojas de cálculo avanzadas", ruta: "excel-avanzado" },
+  { nombre: "Presentaciones profesionales", ruta: "powerpoint-pro" },
+  { nombre: "Robótica con Arduino", ruta: "arduino-robotica" },
+  { nombre: "Impresión 3D básica", ruta: "impresion-3d" },
+  { nombre: "Ciber-seguridad y privacidad", ruta: "ciberseguridad" },
+  { nombre: "Emprendimiento digital", ruta: "emprendimiento-digital" },
 ];
 
 export default function ClasesPage() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const grado = searchParams.get("grado");
 
-  // ✅ Validar que solo accedan 1º-3º
-  if (!grado || !["1", "2", "3"].includes(grado)) {
+  /* ---------- Captura de errores ---------- */
+  useEffect(() => {
+    const handleError = (ev: ErrorEvent) => {
+      const msg = ev.error?.message ?? ev.message ?? "Error desconocido";
+      console.error("❌ Error capturado:", ev.error || ev);
+      alert("Error: " + msg);
+    };
+
+    const handleRejection = (ev: PromiseRejectionEvent) => {
+      const reason = ev.reason;
+      const msg =
+        reason instanceof Error
+          ? reason.message
+          : typeof reason === "string"
+          ? reason
+          : JSON.stringify(reason);
+      console.error("❌ Promesa rechazada:", reason);
+      alert("Error: " + msg);
+    };
+
+    window.addEventListener("error", handleError);
+    window.addEventListener("unhandledrejection", handleRejection);
+
+    return () => {
+      window.removeEventListener("error", handleError);
+      window.removeEventListener("unhandledrejection", handleRejection);
+    };
+  }, []);
+
+  /* ---------- Validación ---------- */
+  const gradosPermitidos = ["1", "2", "3", "4", "5"];
+  if (!grado || !gradosPermitidos.includes(grado)) {
     return (
       <div className="clases-container">
         <div className="clases-card">
           <h2>Acceso no permitido</h2>
-          <p>Esta sección es solo para estudiantes de 1º a 3º grado.</p>
+          <p>Solo estudiantes de 1º a 5º grado pueden ingresar.</p>
           <Link href="/alumno" className="clases-btn">Volver</Link>
         </div>
       </div>
     );
   }
 
+  /* ---------- Lista dinámica ---------- */
+  const lista =
+    ["1", "2", "3"].includes(grado) ? clasesGrados1a3 : clasesGrados4y5;
+
+  /* ---------- Vista ---------- */
   return (
     <div className="clases-container">
       <div className="clases-header">
@@ -51,20 +104,27 @@ export default function ClasesPage() {
         <Link href="/alumno" className="clases-btn-outline">Volver</Link>
       </div>
 
-      <div className="clases-grid">
-        {clasesGrados1a3.map((clase, index) => (
-          <Link
-            key={index}
-            href={`/alumno/clases/${encodeURIComponent(clase)}?grado=${grado}`}
-            className="clase-card appear-wave"
-            data-aos="fade-up"
-            data-aos-delay={`${index * 100}`}
-          >
-            <div className="clase-icon">📘</div>
-            <h3 className="clase-titulo">{clase}</h3>
-          </Link>
-        ))}
-      </div>
+      {lista.length === 0 ? (
+        <div className="clases-card" style={{ marginTop: "2rem" }}>
+          <h3>Próximamente</h3>
+          <p>Las clases para {grado}º grado estarán disponibles muy pronto.</p>
+        </div>
+      ) : (
+        <div className="clases-grid">
+          {lista.map((clase, index) => (
+            <Link
+              key={index}
+              href={`/alumno/clases/${clase.ruta}?grado=${grado}`}
+              className="clase-card appear-wave"
+              data-aos="fade-up"
+              data-aos-delay={`${index * 100}`}
+            >
+              <div className="clase-icon">📘</div>
+              <h3 className="clase-titulo">{clase.nombre}</h3>
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

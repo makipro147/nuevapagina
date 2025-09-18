@@ -23,12 +23,12 @@
   position: absolute;
   top: 2rem;
   left: 50%;
-  transform: translateX(-50%);
-  width: 280px;
-  height: 160px;
-  border-radius: 12px;
+  transform: translate(-50%, 0) scale(1.2); /* centrado real + zoom */
+  width: 336px; 
+  height: 200px; /* más largo hacia abajo */
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
 }
 
 .login-gif img {
@@ -37,6 +37,7 @@
   object-fit: cover;
   animation: pulseGif 3s infinite alternate;
 }
+
 
 @keyframes pulseGif {
   0% { transform: scale(1); }

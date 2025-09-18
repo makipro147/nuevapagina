@@ -1,0 +1,96 @@
+/* ===== FONDO DEL CARRUSEL ===== */
+.carousel3d-wrapper {
+  background-image: url('/image/fondo-carrusel.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 4rem 0;
+  border-radius: 20px;
+  margin: 2rem 0;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== CARRUSEL 3D ===== */
+.scene3d {
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+  perspective: 1600px;
+}
+
+.carousel3d {
+  width: 200px;
+  height: 300px;
+  margin: auto;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: rotate3d 20s infinite linear;
+  transform: rotateX(-18deg) scale(1.4);
+}
+
+.panel3d {
+  position: absolute;
+  width: 200px;
+  height: 300px;
+  backface-visibility: visible;
+}
+
+.panel3d img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* Distribución para 6 imágenes */
+.panel3d:nth-child(1) { transform: rotateY(0deg) translateZ(380px); }
+.panel3d:nth-child(2) { transform: rotateY(60deg) translateZ(380px); }
+.panel3d:nth-child(3) { transform: rotateY(120deg) translateZ(380px); }
+.panel3d:nth-child(4) { transform: rotateY(180deg) translateZ(380px); }
+.panel3d:nth-child(5) { transform: rotateY(240deg) translateZ(380px); }
+.panel3d:nth-child(6) { transform: rotateY(300deg) translateZ(380px); }
+
+@keyframes rotate3d {
+  from { transform: rotateX(-18deg) rotateY(0deg) scale(1.4); }
+  to { transform: rotateX(-18deg) rotateY(360deg) scale(1.4); }
+}
+
+/* ===== MÓVIL: iPhone 12 / 390 px ===== */
+@media (max-width: 480px) {
+  .carousel3d-wrapper {
+    padding: 2rem 0; /* menos padding vertical */
+    margin: 1rem 0;
+    border-radius: 12px;
+  }
+
+  .scene3d {
+    max-width: 100%; /* usa todo el ancho disponible */
+    perspective: 1000px; /* perspectiva más cercana */
+  }
+
+  .carousel3d {
+    width: 140px;   /* panel más chico */
+    height: 210px;
+    transform: rotateX(-15deg) scale(1.2); /* menos inclinado y más cerca */
+    animation: rotate3d-mobile 15s infinite linear;
+  }
+
+  .panel3d {
+    width: 140px;
+    height: 210px;
+  }
+
+  /* nueva animación más rápida y suave */
+  @keyframes rotate3d-mobile {
+    from { transform: rotateX(-15deg) rotateY(0deg) scale(1.2); }
+    to { transform: rotateX(-15deg) rotateY(360deg) scale(1.2); }
+  }
+
+  /* radio más chico para que no se salga */
+  .panel3d:nth-child(1) { transform: rotateY(0deg) translateZ(240px); }
+  .panel3d:nth-child(2) { transform: rotateY(60deg) translateZ(240px); }
+  .panel3d:nth-child(3) { transform: rotateY(120deg) translateZ(240px); }
+  .panel3d:nth-child(4) { transform: rotateY(180deg) translateZ(240px); }
+  .panel3d:nth-child(5) { transform: rotateY(240deg) translateZ(240px); }
+  .panel3d:nth-child(6) { transform: rotateY(300deg) translateZ(240px); }
+}
