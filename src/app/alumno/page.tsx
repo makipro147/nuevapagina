@@ -20,6 +20,8 @@ export default function AlumnoPage() {
   const [form, setForm] = useState({ nombre: "", edad: "", telefono: "" });
 
   useEffect(() => {
+    if (typeof window === "undefined") return; // SSR safe
+
     AOS.init({ duration: 1000, once: true });
 
     const storedUser = localStorage.getItem("user");
@@ -32,33 +34,64 @@ export default function AlumnoPage() {
     setUser(userData);
 
     async function fetchAlumno() {
-      const { data } = await supabase
-        .from("alumnos")
-        .select("*")
-        .eq("usuario_id", userData.id)
-        .single();
+      try {
+        const { data, error } = await supabase
+          .from("alumnos")
+          .select("*")
+          .eq("usuario_id", userData.id)
+          .single();
 
-      if (data) {
-        setAlumno(data);
-        setForm({ nombre: data.nombre, edad: data.edad, telefono: data.telefono });
-        if (urlGrado && parseInt(urlGrado) !== data.grado) {
-          setMensaje(`Este no es tu grado. Tu grado real es el ${data.grado}º.`);
+        if (error) {
+          console.error("Supabase error:", error.message);
+          setMensaje("Error al obtener datos del alumno.");
+          return;
         }
+
+        if (data) {
+          setAlumno(data);
+          setForm({
+            nombre: data.nombre,
+            edad: data.edad,
+            telefono: data.telefono,
+          });
+
+          if (urlGrado && parseInt(urlGrado) !== data.grado) {
+            setMensaje(`Este no es tu grado. Tu grado real es el ${data.grado}º.`);
+          }
+        }
+      } catch (err: any) {
+        console.error("❌ Error inesperado en fetchAlumno:", JSON.stringify(err));
+        setMensaje("Error inesperado al cargar los datos.");
       }
     }
 
     fetchAlumno();
-  }, [urlGrado]);
+  }, [urlGrado, router]);
 
   const handleGuardar = async () => {
-    const { error } = await supabase
-      .from("alumnos")
-      .update({ nombre: form.nombre, edad: form.edad, telefono: form.telefono })
-      .eq("usuario_id", user.id);
+    if (!user) return;
 
-    if (!error) {
+    try {
+      const { error } = await supabase
+        .from("alumnos")
+        .update({
+          nombre: form.nombre,
+          edad: form.edad,
+          telefono: form.telefono,
+        })
+        .eq("usuario_id", user.id);
+
+      if (error) {
+        console.error("Supabase update error:", error.message);
+        setMensaje("No se pudieron guardar los cambios.");
+        return;
+      }
+
       setAlumno({ ...alumno, ...form });
       setEditando(false);
+    } catch (err: any) {
+      console.error("❌ Error inesperado en handleGuardar:", JSON.stringify(err));
+      setMensaje("Error inesperado al guardar los datos.");
     }
   };
 
@@ -67,7 +100,9 @@ export default function AlumnoPage() {
     router.push("/");
   };
 
-  if (!alumno) return <p className="text-center mt-10">Cargando...</p>;
+  if (!alumno && !mensaje) {
+    return <p className="text-center mt-10">Cargando...</p>;
+  }
 
   if (mensaje) {
     return (
@@ -78,7 +113,7 @@ export default function AlumnoPage() {
           <button
             onClick={() => {
               localStorage.clear();
-              window.location.href = "/";
+              router.push("/");
             }}
             className="alumno-btn"
           >
@@ -92,7 +127,7 @@ export default function AlumnoPage() {
   return (
     <div className="alumno-container">
       <div className="alumno-card" data-aos="fade-up">
-        <h1 className="alumno-title">Bienvenido, {alumno.nombre}</h1>
+        <h1 className="alumno-title">Bienvenido, {alumno?.nombre}</h1>
 
         {!editando ? (
           <>
@@ -107,7 +142,10 @@ export default function AlumnoPage() {
               <button onClick={() => setEditando(true)} className="alumno-btn">
                 Editar datos
               </button>
-              <Link href={`/alumno/clases?grado=${alumno.grado}`} className="alumno-btn alumno-btn-outline">
+              <Link
+                href={`/alumno/clases?grado=${alumno.grado}`}
+                className="alumno-btn alumno-btn-outline"
+              >
                 Ver clases
               </Link>
               <button onClick={handleSalir} className="alumno-btn alumno-btn-outline">
@@ -140,8 +178,15 @@ export default function AlumnoPage() {
             </div>
 
             <div className="alumno-buttons">
-              <button onClick={handleGuardar} className="alumno-btn">Guardar</button>
-              <button onClick={() => setEditando(false)} className="alumno-btn alumno-btn-outline">Cancelar</button>
+              <button onClick={handleGuardar} className="alumno-btn">
+                Guardar
+              </button>
+              <button
+                onClick={() => setEditando(false)}
+                className="alumno-btn alumno-btn-outline"
+              >
+                Cancelar
+              </button>
             </div>
           </>
         )}
