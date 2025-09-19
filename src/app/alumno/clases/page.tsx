@@ -13,7 +13,9 @@ const clasesGrados1a3 = [
   { nombre: "Cómo elegir y presentar un tema con Canva", ruta: "canva-presentar-tema" },
   { nombre: "Uso completo de Canva Presentaciones", ruta: "canva-presentaciones" },
   { nombre: "Creación de logo con Canva para tu tema", ruta: "canva-logo" },
+
   { nombre: "Edición de video con Canva (1 minuto)", ruta: "canva-video" },
+  
   { nombre: "Hardware y Software", ruta: "hardware-software" },
   { nombre: "Sistema Operativo Windows", ruta: "sistema-windows" },
   { nombre: "Introducción a Internet", ruta: "introduccion-internet" },
