@@ -5,8 +5,11 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import "./clase-completa.css";
 import Link from "next/link";
+import useGradoFromUrl from "@/hooks/useGradoFromUrl";
 
 export default function GuiaCanvaPage() {
+  const grado = useGradoFromUrl(); // 👉 grado real del alumno
+
   useEffect(() => {
     AOS.init({ duration: 1000, once: true });
   }, []);
@@ -125,9 +128,9 @@ export default function GuiaCanvaPage() {
         </ul>
       </section>
 
-      {/* Footer */}
+      {/* ✅ Botón dinámico */}
       <div className="clase-footer" data-aos="fade-up">
-        <Link href="/alumno/clases?grado=1" className="clase-btn">
+        <Link href={`/alumno/clases?grado=${grado}`} className="clase-btn">
           Volver a las clases
         </Link>
       </div>

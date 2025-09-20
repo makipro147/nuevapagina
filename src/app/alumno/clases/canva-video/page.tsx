@@ -4,18 +4,20 @@ import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "./clase-completa.css";
-import Carrusel3D from "./Carrusel3D";   // <- NUEVA LÍNEA
+import Carrusel3D from "./Carrusel3D";
 import Link from "next/link";
+import useGradoFromUrl from "@/hooks/useGradoFromUrl";
 
 export default function CrearVideoCanvaPage() {
+  const grado = useGradoFromUrl(); // 👉 grado real del alumno
+
   useEffect(() => {
     AOS.init({ duration: 1000, once: true });
   }, []);
 
   return (
-    
     <div className="clase-completa-container">
-        
+      {/* Hero */}
       <section className="clase-hero" data-aos="fade-down">
         <h1 className="clase-titulo">Cómo crear un video en Canva (gratis y dinámico)</h1>
         <p className="clase-subtitulo">
@@ -23,10 +25,10 @@ export default function CrearVideoCanvaPage() {
         </p>
       </section>
 
-      {/* Sección 1 */}
-      {/* 🎯 CARRUSEL 3D – NUEVO */}
+      {/* Carrusel 3D */}
       <Carrusel3D />
 
+      {/* Sección 1 */}
       <section className="clase-seccion" data-aos="fade-up">
         <h2>1. Entrar a Canva</h2>
         <ol>
@@ -286,9 +288,9 @@ export default function CrearVideoCanvaPage() {
         </p>
       </section>
 
-      {/* Botón de regreso */}
+      {/* ✅ Botón dinámico */}
       <div className="clase-footer" data-aos="fade-up">
-        <Link href="/alumno/clases?grado=1" className="clase-btn">
+        <Link href={`/alumno/clases?grado=${grado}`} className="clase-btn">
           Volver a las clases
         </Link>
       </div>

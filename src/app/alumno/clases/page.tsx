@@ -13,22 +13,13 @@ const clasesGrados1a3 = [
   { nombre: "Cómo elegir y presentar un tema con Canva", ruta: "canva-presentar-tema" },
   { nombre: "Uso completo de Canva Presentaciones", ruta: "canva-presentaciones" },
   { nombre: "Creación de logo con Canva para tu tema", ruta: "canva-logo" },
-
   { nombre: "Edición de video con Canva (1 minuto)", ruta: "canva-video" },
-  
   { nombre: "Hardware y Software", ruta: "hardware-software" },
   { nombre: "Sistema Operativo Windows", ruta: "sistema-windows" },
   { nombre: "Introducción a Internet", ruta: "introduccion-internet" },
   { nombre: "Navegadores Web", ruta: "navegadores-web" },
+
   { nombre: "Correo Electrónico", ruta: "correo-electronico" },
-  { nombre: "Introducción a Word", ruta: "introduccion-word" },
-  { nombre: "Introducción a Excel", ruta: "introduccion-excel" },
-  { nombre: "Introducción a PowerPoint", ruta: "introduccion-powerpoint" },
-  { nombre: "Archivos y Carpetas", ruta: "archivos-carpetas" },
-  { nombre: "Teclado y Ratón", ruta: "teclado-raton" },
-  { nombre: "Impresoras y Periféricos", ruta: "impresoras-perifericos" },
-  { nombre: "Seguridad en la Web", ruta: "seguridad-web" },
-  { nombre: "Etiqueta Digital", ruta: "etiqueta-digital" },
 ];
 
 /* ===== 4º-5º ===== */

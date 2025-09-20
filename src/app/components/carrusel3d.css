@@ -1,7 +1,7 @@
 /* ===== FONDO DEL CARRUSEL ===== */
 .carousel3d-wrapper {
-  background-image: url('/image/fondo-carrusel.jpg');
-  background-size: cover;
+  background-image: url('/image/solo.png');
+  background-size: auto;
   background-position: center;
   background-repeat: no-repeat;
   padding: 4rem 0;
@@ -9,7 +9,6 @@
   margin: 2rem 0;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
 }
-
 /* ===== CARRUSEL 3D ===== */
 .scene3d {
   width: 100%;
