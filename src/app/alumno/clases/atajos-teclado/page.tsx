@@ -2,9 +2,9 @@
 
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import "./atajos-teclado.css";
+import useGradoFromUrl from "@/hooks/useGradoFromUrl";
 
 const atajos = [
   { keys: "Ctrl + C", desc: "Copiar" },
@@ -22,17 +22,13 @@ const atajos = [
 ];
 
 export default function AtajosTecladoPage() {
-  const searchParams = useSearchParams();
-  const grado = searchParams.get("grado");
+  const grado = useGradoFromUrl(); // 👉 grado real del alumno
 
   const titleRef = useRef<HTMLHeadingElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    // ✅ Animación de entrada suave
     gsap.fromTo(titleRef.current, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1, ease: "power2.out" });
-
-    // ✅ Animación escalonada de tarjetas
     gsap.fromTo(cardRefs.current, { opacity: 0, y: 30 }, {
       opacity: 1,
       y: 0,
@@ -55,17 +51,17 @@ export default function AtajosTecladoPage() {
 
       <section className="atajos-grid">
         {atajos.map((item, index) => (
-  <div
-    key={index}
-    ref={(el) => {
-      if (el) cardRefs.current[index] = el;
-    }}
-    className="atajo-card"
-  >
-    <div className="atajo-teclas">{item.keys}</div>
-    <div className="atajo-desc">{item.desc}</div>
-  </div>
-))}
+          <div
+            key={index}
+            ref={(el) => {
+              if (el) cardRefs.current[index] = el;
+            }}
+            className="atajo-card"
+          >
+            <div className="atajo-teclas">{item.keys}</div>
+            <div className="atajo-desc">{item.desc}</div>
+          </div>
+        ))}
       </section>
 
       <div className="atajos-footer">

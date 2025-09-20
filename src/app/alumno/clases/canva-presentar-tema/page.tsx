@@ -1,4 +1,3 @@
-// pages/clase/indicaciones.tsx  (o tu ruta con App Router)
 "use client";
 
 import { useEffect } from "react";
@@ -6,25 +5,26 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import "./clase-completa.css";
 import Link from "next/link";
+import useGradoFromUrl from "@/hooks/useGradoFromUrl";
 
 export default function IndicacionesProyectoPage() {
+  const grado = useGradoFromUrl(); // 👉 grado real del alumno
+
   useEffect(() => {
     AOS.init({ duration: 1000, once: true });
   }, []);
 
   return (
     <div className="clase-completa-container">
-      {/* HERO */}
+      {/* Hero */}
       <section className="clase-hero" data-aos="fade-down">
         <h1 className="clase-titulo">Indicaciones para tu Proyecto</h1>
         <p className="clase-subtitulo">
-          Elegí un tema, justificá tu elección, creá un título llamativo y
-          argumentá tus ideas
+          Elegí un tema, justificá tu elección, creá un título llamativo y argumentá tus ideas
         </p>
       </section>
 
-
-      {/* SECCIÓN 1 – Elegí tu tema */}
+      {/* Sección 1 – Elegí tu tema */}
       <section className="clase-seccion" data-aos="fade-up">
         <h2>1. Elegí tu tema</h2>
         <div className="componente" data-aos="fade-right">
@@ -37,7 +37,7 @@ export default function IndicacionesProyectoPage() {
         </div>
       </section>
 
-      {/* SECCIÓN 2 – ¿Por qué lo elegís? */}
+      {/* Sección 2 – ¿Por qué lo elegís? */}
       <section className="clase-seccion" data-aos="fade-up">
         <h2>2. ¿Por qué lo elegís?</h2>
         <div className="componente" data-aos="fade-left">
@@ -50,7 +50,7 @@ export default function IndicacionesProyectoPage() {
         </div>
       </section>
 
-      {/* SECCIÓN 3 – Creá un título llamativo */}
+      {/* Sección 3 – Creá un título llamativo */}
       <section className="clase-seccion" data-aos="fade-up">
         <h2>3. Creá un título llamativo</h2>
         <div className="componente" data-aos="fade-right">
@@ -63,7 +63,7 @@ export default function IndicacionesProyectoPage() {
         </div>
       </section>
 
-      {/* SECCIÓN 4 – Argumentá con tus palabras */}
+      {/* Sección 4 – Argumentá con tus palabras */}
       <section className="clase-seccion" data-aos="fade-up">
         <h2>4. Argumentá con tus palabras</h2>
         <div className="componente" data-aos="fade-left">
@@ -77,7 +77,7 @@ export default function IndicacionesProyectoPage() {
         </div>
       </section>
 
-      {/* SECCIÓN 5 – Plantilla para copiar y completar */}
+      {/* Sección 5 – Plantilla para copiar y completar */}
       <section className="clase-seccion" data-aos="fade-up">
         <h2>5. Plantilla para copiar y completar</h2>
         <div className="componente" data-aos="fade-right">
@@ -105,19 +105,18 @@ ARGUMENTO:
         </div>
       </section>
 
-      {/* SECCIÓN 6 – Resumen y entrega */}
+      {/* Sección 6 – Resumen y entrega */}
       <section className="clase-seccion" data-aos="fade-up">
         <h2>6. Resumen y entrega</h2>
         <p className="conclusion">
-          Ya tenés todo: tema, justificación, título y argumento.  
-          <br />
-          ✅ <strong>Actividad:</strong>siguiendo la plantilla y Guarda tu doc en word.
+          Ya tenés todo: tema, justificación, título y argumento.<br />
+          ✅ <strong>Actividad:</strong> seguí la plantilla y guardá tu doc en Word.
         </p>
       </section>
 
-      {/* Botón de regreso */}
+      {/* ✅ Botón dinámico */}
       <div className="clase-footer" data-aos="fade-up">
-        <Link href="/alumno/clases?grado=1" className="clase-btn">
+        <Link href={`/alumno/clases?grado=${grado}`} className="clase-btn">
           Volver a las clases
         </Link>
       </div>

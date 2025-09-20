@@ -1,0 +1,173 @@
+/* ==========================
+   Guía Canva – Estilos
+   Fondo blanco, centrado,
+   elegante y con paleta educativa
+========================== */
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #ffffff;
+  margin: 0;
+  padding: 0;
+  color: #222;
+  line-height: 1.6;
+}
+
+/* Contenedor principal */
+.clase-completa-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+/* Hero */
+.clase-hero {
+  margin-bottom: 3rem;
+}
+
+.clase-titulo {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: #3b82f6; /* azul brillante */
+}
+
+.clase-subtitulo {
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  color: #6b21a8; /* morado Canva */
+  font-weight: 500;
+}
+
+/* Secciones */
+.clase-seccion {
+  margin: 2.5rem 0;
+  padding: 1.5rem;
+  border-radius: 14px;
+  background: #fafafa;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+  text-align: left;
+  border-left: 6px solid #9333ea; /* acento morado */
+  transition: transform 0.2s ease;
+}
+
+.clase-seccion:hover {
+  transform: translateY(-3px);
+}
+
+.clase-seccion h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  color: #1e293b;
+  margin-bottom: 1rem;
+  text-align: center;
+  position: relative;
+}
+
+.clase-seccion h2::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 3px;
+  margin: 0.6rem auto 0;
+  background: linear-gradient(90deg, #3b82f6, #9333ea);
+  border-radius: 2px;
+}
+
+/* Listas */
+.clase-seccion ol,
+.clase-seccion ul {
+  padding-left: 1.5rem;
+}
+
+.clase-seccion li {
+  margin-bottom: 0.7rem;
+}
+
+/* Tablas */
+.clase-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.clase-tabla th,
+.clase-tabla td {
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.clase-tabla thead {
+  background: linear-gradient(90deg, #3b82f6, #9333ea);
+  color: #fff;
+}
+
+.clase-tabla th {
+  font-weight: 600;
+}
+
+.clase-tabla tr:nth-child(even) {
+  background: #f9f9ff;
+}
+
+.clase-tabla tr:last-child td {
+  border-bottom: none;
+}
+
+/* Tip extra */
+.tip {
+  margin-top: 1rem;
+  font-style: italic;
+  text-align: center;
+  color: #4b5563;
+}
+
+/* Footer */
+.clase-footer {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.clase-btn {
+  display: inline-block;
+  padding: 0.9rem 1.6rem;
+  background: linear-gradient(90deg, #3b82f6, #9333ea);
+  color: #fff;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  font-weight: 600;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.clase-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4);
+}
+
+/* Animaciones suaves + integración con AOS */
+[data-aos] {
+  opacity: 0;
+  transition-property: opacity, transform;
+}
+
+[data-aos].aos-animate {
+  opacity: 1;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .clase-completa-container {
+    padding: 1.5rem 0.8rem;
+  }
+  
+  .clase-tabla th,
+  .clase-tabla td {
+    padding: 0.7rem;
+  }
+}
