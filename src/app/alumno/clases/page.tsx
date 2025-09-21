@@ -23,15 +23,21 @@ const clasesGrados1a3 = [
 
 /* ===== 4º-5º ===== */
 const clasesGrados4y5 = [
+  { nombre: "Componentes de una PC", ruta: "componentes-pc" },
+  { nombre: "Atajos de teclado", ruta: "atajos-teclado" },
+  { nombre: "Explorador de archivos y compresión en RAR", ruta: "explorador-archivos-rar" },
   { nombre: "Visual Studio Code y extensiones", ruta: "visual-studio-code" },
   { nombre: "Lenguajes de Programacion", ruta: "lenguajes-programacion" },
+
   { nombre: "Empezaremos con HTML", ruta: "lenguaje-html" },
   { nombre: "Mini Proyecto Html", ruta: "proyecto-html" },
+
   { nombre: "Html y Css carrusel", ruta: "imagenes-carrusel" },
 
   { nombre: "Introduccion a base de datos", ruta: "introduccion-bases-datos" },
   { nombre: "Bases de datos en superbase", ruta: "introduccion-supabase" },
-  { nombre: "Hojas de cálculo avanzadas", ruta: "excel-avanzado" },
+
+  { nombre: "Como usar Explorador de archivos", ruta: "Explorador-archivos-avanzados" },
   { nombre: "Robótica con Arduino", ruta: "arduino-robotica" },
   { nombre: "Impresión 3D básica", ruta: "impresion-3d" },
   { nombre: "Ciber-seguridad y privacidad", ruta: "ciberseguridad" },

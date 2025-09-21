@@ -1,3 +1,4 @@
+// src/app/alumno/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -30,19 +31,52 @@ export default function AlumnoPage() {
       return;
     }
 
-    const userData = JSON.parse(storedUser);
-    setUser(userData);
+    let userData: any;
+    try {
+      userData = JSON.parse(storedUser);
+    } catch (e) {
+      console.error("❌ No se pudo parsear localStorage user:", e);
+      localStorage.removeItem("user");
+      router.push("/login");
+      return;
+    }
 
+    // <-- aquí: imprime lo que realmente está en localStorage
+    console.log("🟢 Usuario desde localStorage:", userData);
+
+    // Resolver posible nombre del id (id, usuario_id, userId, uid, usuarioId...)
+    const resolvedUserId =
+      userData?.id ??
+      userData?.usuario_id ??
+      userData?.userId ??
+      userData?.uid ??
+      userData?.usuarioId ??
+      undefined;
+
+    if (!resolvedUserId) {
+      console.error("⚠️ No se encontró un id válido en localStorage:", userData);
+      // Evitar consultas con 'undefined' que rompen PostgreSQL/UUID
+      localStorage.removeItem("user");
+      setMensaje("Usuario inválido. Por favor vuelve a iniciar sesión.");
+      // redirigir al login para rehacer la sesión
+      router.push("/login");
+      return;
+    }
+
+    // Guardar user asegurando que user.id exista
+    setUser({ ...userData, id: resolvedUserId });
+
+    // fetchAlumno ahora usa resolvedUserId (no undefined)
     async function fetchAlumno() {
       try {
         const { data, error } = await supabase
           .from("alumnos")
           .select("*")
-          .eq("usuario_id", userData.id)
+          .eq("usuario_id", resolvedUserId)
           .single();
 
         if (error) {
-          console.error("Supabase error:", error.message);
+          console.error("Supabase error (fetchAlumno):", error);
           setMensaje("Error al obtener datos del alumno.");
           return;
         }
@@ -69,7 +103,11 @@ export default function AlumnoPage() {
   }, [urlGrado, router]);
 
   const handleGuardar = async () => {
-    if (!user) return;
+    if (!user?.id) {
+      alert("Usuario no identificado. Vuelve a iniciar sesión.");
+      router.push("/login");
+      return;
+    }
 
     try {
       const { error } = await supabase
@@ -82,7 +120,7 @@ export default function AlumnoPage() {
         .eq("usuario_id", user.id);
 
       if (error) {
-        console.error("Supabase update error:", error.message);
+        console.error("Supabase update error:", error);
         setMensaje("No se pudieron guardar los cambios.");
         return;
       }
@@ -194,7 +232,3 @@ export default function AlumnoPage() {
     </div>
   );
 }
-
-// prueba 01 develop rama
-
-// comentario error 
