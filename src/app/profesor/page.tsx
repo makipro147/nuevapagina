@@ -149,6 +149,7 @@ export default function ProfesorPage() {
 
         <div className="profesor-buttons-top">
           <button onClick={handleAgregar} className="profesor-btn">Agregar alumno</button>
+           {/* Comentario: Botón para ver las clases del grado actual */}
           <button onClick={handleVerClases} className="profesor-btn">Ver clases</button>
           <button onClick={handleSalir} className="profesor-btn">Salir</button>
         </div>

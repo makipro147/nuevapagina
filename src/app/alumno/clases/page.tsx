@@ -18,20 +18,26 @@ const clasesGrados1a3 = [
   { nombre: "Sistema Operativo Windows", ruta: "sistema-windows" },
   { nombre: "Introducción a Internet", ruta: "introduccion-internet" },
   { nombre: "Navegadores Web", ruta: "navegadores-web" },
-
   { nombre: "Correo Electrónico", ruta: "correo-electronico" },
 ];
 
 /* ===== 4º-5º ===== */
 const clasesGrados4y5 = [
-  { nombre: "Edición de video avanzada con Premiere", ruta: "premiere-avanzado" },
-  { nombre: "Animación 2D con After Effects", ruta: "after-effects-2d" },
-  { nombre: "Diseño de interfaces con Figma", ruta: "figma-ui" },
-  { nombre: "JavaScript interactivo", ruta: "javascript-interactivo" },
-  { nombre: "Intro a React y componentes", ruta: "react-componentes" },
-  { nombre: "Bases de datos con SQLite", ruta: "sqlite-bases-datos" },
-  { nombre: "Hojas de cálculo avanzadas", ruta: "excel-avanzado" },
-  { nombre: "Presentaciones profesionales", ruta: "powerpoint-pro" },
+  { nombre: "Componentes de una PC", ruta: "componentes-pc" },
+  { nombre: "Atajos de teclado", ruta: "atajos-teclado" },
+  { nombre: "Explorador de archivos y compresión en RAR", ruta: "explorador-archivos-rar" },
+  { nombre: "Visual Studio Code y extensiones", ruta: "visual-studio-code" },
+  { nombre: "Lenguajes de Programacion", ruta: "lenguajes-programacion" },
+
+  { nombre: "Empezaremos con HTML", ruta: "lenguaje-html" },
+  { nombre: "Mini Proyecto Html", ruta: "proyecto-html" },
+
+  { nombre: "Html y Css carrusel", ruta: "imagenes-carrusel" },
+
+  { nombre: "Introduccion a base de datos", ruta: "introduccion-bases-datos" },
+  { nombre: "Bases de datos en superbase", ruta: "introduccion-supabase" },
+
+  { nombre: "Como usar Explorador de archivos", ruta: "Explorador-archivos-avanzados" },
   { nombre: "Robótica con Arduino", ruta: "arduino-robotica" },
   { nombre: "Impresión 3D básica", ruta: "impresion-3d" },
   { nombre: "Ciber-seguridad y privacidad", ruta: "ciberseguridad" },
