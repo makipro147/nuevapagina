@@ -95,7 +95,9 @@ function LoginContent() {
   const loginWithGoogle = async () => {
     try {
       const grado = searchParams.get("grado");
-      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin;
+      const siteUrl =
+        process.env.NEXT_PUBLIC_SITE_URL ||
+        (typeof window !== "undefined" ? window.location.origin : "");
       const redirectTo = `${siteUrl}/login${grado ? `?grado=${grado}` : ""}`;
       await supabase.auth.signInWithOAuth({
         provider: "google",
