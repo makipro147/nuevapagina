@@ -28,42 +28,47 @@ function AgregarAlumnoForm() {
       return;
     }
 
-    // 1. Crear usuario
-    const { data: usuario, error: userError } = await supabase
-      .from("usuarios")
-      .insert([
+    try {
+      // 1️⃣ Insertar usuario en tabla 'usuarios' directamente
+      const { data: usuario, error: userError } = await supabase
+        .from("usuarios")
+        .insert([
+          {
+            email: form.email,
+            password: form.password,
+            rol: "alumno",
+          },
+        ])
+        .select("*")
+        .single();
+
+      if (userError || !usuario) {
+        alert("Error al crear usuario: " + userError?.message);
+        return;
+      }
+
+      // 2️⃣ Insertar datos en tabla 'alumnos'
+      const { error: alumnoError } = await supabase.from("alumnos").insert([
         {
-          email: form.email,
-          password: form.password,
-          rol: "alumno",
+          usuario_id: usuario.id,
+          nombre: form.nombre,
+          edad: parseInt(form.edad),
+          telefono: form.telefono,
+          grado: parseInt(grado as string),
         },
-      ])
-      .select("*")
-      .single();
+      ]);
 
-    if (userError || !usuario) {
-      alert("Error al crear usuario: " + userError?.message);
-      return;
+      if (alumnoError) {
+        alert("Error al crear alumno: " + alumnoError.message);
+        return;
+      }
+
+      alert("Alumno agregado con éxito");
+      router.push(`/profesor?grado=${grado}`);
+    } catch (err) {
+      console.error(err);
+      alert("Ocurrió un error inesperado");
     }
-
-    // 2. Crear alumno
-    const { error: alumnoError } = await supabase.from("alumnos").insert([
-      {
-        usuario_id: usuario.id,
-        nombre: form.nombre,
-        edad: parseInt(form.edad),
-        telefono: form.telefono,
-        grado: parseInt(grado as string),
-      },
-    ]);
-
-    if (alumnoError) {
-      alert("Error al crear alumno: " + alumnoError.message);
-      return;
-    }
-
-    alert("Alumno agregado con éxito");
-    router.push(`/profesor?grado=${grado}`);
   };
 
   return (
@@ -126,7 +131,6 @@ function AgregarAlumnoForm() {
   );
 }
 
-// 👉 Aquí va el Suspense para evitar el error
 export default function AgregarAlumnoPage() {
   return (
     <Suspense fallback={<div>Cargando...</div>}>
