@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "./clase-completa.css";
 import Link from "next/link";
 import useGradoFromUrl from "@/hooks/useGradoFromUrl";
 
-export default function ExploradorArchivosPage() {
+function ExploradorArchivosContent() {
   const grado = useGradoFromUrl();
 
   useEffect(() => {
@@ -22,8 +22,6 @@ export default function ExploradorArchivosPage() {
         <p className="clase-subtitulo">
           Nivel “casi-experto” explicado como si fuera tu propia casa
         </p>
-        {/* 👉 Imagen opcional */}
-        {/* <img src="/images/explorador-hero.png" alt="Explorador de archivos" className="clase-img" /> */}
       </section>
 
       {/* 1. Qué es realmente */}
@@ -57,8 +55,7 @@ export default function ExploradorArchivosPage() {
             <tr><td>🎬</td><td>Vídeos</td><td>Cine personal</td><td>TikToks y grabaciones</td></tr>
           </tbody>
         </table>
-        {/* 👉 Imagen opcional */}
-        {<img src="/image/explorador.png" alt="Vista de carpetas" className="clase-img" />}
+        <img src="/image/explorador.png" alt="Vista de carpetas" className="clase-img" />
       </section>
 
       {/* 3. Vista de cuartos */}
@@ -178,5 +175,13 @@ export default function ExploradorArchivosPage() {
         </Link>
       </div>
     </div>
+  );
+}
+
+export default function ExploradorArchivosPage() {
+  return (
+    <Suspense fallback={<div>Cargando...</div>}>
+      <ExploradorArchivosContent />
+    </Suspense>
   );
 }

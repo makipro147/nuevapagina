@@ -1,18 +1,26 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "./clase-completa.css";
 import Carrusel3D from "./Carrusel3D";
 import Link from "next/link";
-import useGradoFromUrl from "@/hooks/useGradoFromUrl";
 
-export default function LogoCanvaPage() {
-  const grado = useGradoFromUrl(); // 👉 grado real del alumno
+function GradoInner() {
+  const searchParams = useSearchParams();
+  const grado = searchParams.get("grado");
 
+  // Validamos si el grado está entre 1 y 5
+  const gradoValido = ["1", "2", "3", "4", "5"].includes(grado || "") ? grado! : "1";
+
+  // Inicializar AOS
   useEffect(() => {
-    AOS.init({ duration: 1000, once: true });
+    AOS.init({
+      duration: 800,
+      once: true,
+    });
   }, []);
 
   return (
@@ -39,10 +47,10 @@ export default function LogoCanvaPage() {
 
       {/* Paso 2 */}
       <section className="clase-seccion" data-aos="fade-up">
-        <h2>2. Buscar el formato “Logo”</h2>
+        <h2>2. Buscar el formato "Logo"</h2>
         <div className="componente" data-aos="fade-right">
           <ol>
-            <li>En la barra de búsqueda escribir <strong>“logo”</strong>.</li>
+            <li>En la barra de búsqueda escribir <strong>"logo"</strong>.</li>
             <li>Seleccionar <strong>Logo (500 × 500 px)</strong>.</li>
             <li>Este tamaño es cuadrado y sirve para imprimir o redes.</li>
           </ol>
@@ -160,10 +168,18 @@ export default function LogoCanvaPage() {
 
       {/* ✅ Botón dinámico */}
       <div className="clase-footer" data-aos="fade-up">
-        <Link href={`/alumno/clases?grado=${grado}`} className="clase-btn">
+        <Link href={`/alumno/clases?grado=${gradoValido}`} className="clase-btn">
           Volver a las clases
         </Link>
       </div>
     </div>
+  );
+}
+
+export default function ClaseCompleta() {
+  return (
+    <Suspense fallback={<div>Cargando...</div>}>
+      <GradoInner />
+    </Suspense>
   );
 }

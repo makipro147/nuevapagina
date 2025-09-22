@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
+import { useSearchParams } from "next/navigation";
 import { gsap } from "gsap";
 import Link from "next/link";
 import "./atajos-teclado.css";
-import useGradoFromUrl from "@/hooks/useGradoFromUrl";
 
 const atajos = [
   { keys: "Ctrl + C", desc: "Copiar" },
@@ -21,8 +21,12 @@ const atajos = [
   { keys: "Windows + Shift + S", desc: "Captura de pantalla" },
 ];
 
-export default function AtajosTecladoPage() {
-  const grado = useGradoFromUrl(); // 👉 grado real del alumno
+function AtajosInner() {
+  const searchParams = useSearchParams();
+  const grado = searchParams.get("grado");
+  
+  // Validamos si el grado está entre 1 y 5
+  const gradoValido = ["1", "2", "3", "4", "5"].includes(grado || "") ? grado! : "1";
 
   const titleRef = useRef<HTMLHeadingElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -65,10 +69,18 @@ export default function AtajosTecladoPage() {
       </section>
 
       <div className="atajos-footer">
-        <Link href={`/alumno/clases?grado=${grado}`} className="atajos-btn">
+        <Link href={`/alumno/clases?grado=${gradoValido}`} className="atajos-btn">
           Volver a las clases
         </Link>
       </div>
     </div>
+  );
+}
+
+export default function AtajosTecladoPage() {
+  return (
+    <Suspense fallback={<div>Cargando atajos de teclado...</div>}>
+      <AtajosInner />
+    </Suspense>
   );
 }

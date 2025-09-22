@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "./clase-completa.css";
 import Link from "next/link";
 import useGradoFromUrl from "@/hooks/useGradoFromUrl";
 
-export default function EstructuraCarpetasArchivosPage() {
+// 👉 Contenido principal
+function EstructuraCarpetasArchivosContent() {
   const grado = useGradoFromUrl(); // 👉 grado real del alumno
 
   useEffect(() => {
@@ -28,7 +29,8 @@ export default function EstructuraCarpetasArchivosPage() {
       <section className="clase-seccion cuadro-rebote" data-aos="fade-up">
         <h2>1. ¿Qué vamos a hacer?</h2>
         <p>
-          Vamos a crear un proyecto web completo con varias páginas, estilos, JavaScript e imágenes, todo bien organizado en carpetas.
+          Vamos a crear un proyecto web completo con varias páginas, estilos,
+          JavaScript e imágenes, todo bien organizado en carpetas.
         </p>
       </section>
 
@@ -36,8 +38,14 @@ export default function EstructuraCarpetasArchivosPage() {
       <section className="clase-seccion cuadro-rebote" data-aos="fade-up">
         <h2>2. Estructura completa del proyecto</h2>
         <div className="componente">
-          <pre style={{ background: "#f5f5f5", padding: "1rem", borderRadius: "8px", overflow: "auto" }}>
-{`proyecto/
+          <pre
+            style={{
+              background: "#f5f5f5",
+              padding: "1rem",
+              borderRadius: "8px",
+              overflow: "auto",
+            }}
+          >{`proyecto/
 │── index.html
 │
 ├── pages/
@@ -65,9 +73,18 @@ export default function EstructuraCarpetasArchivosPage() {
       <section className="clase-seccion cuadro-rebote" data-aos="fade-up">
         <h2>3. index.html (página principal)</h2>
         <div className="componente">
-          <p>Será la página principal con un botón de Login que manda a <code>login.html</code>.</p>
-          <pre style={{ background: "#eef", padding: "1rem", borderRadius: "8px", overflow: "auto" }}>
-{`<!DOCTYPE html>
+          <p>
+            Será la página principal con un botón de Login que manda a{" "}
+            <code>login.html</code>.
+          </p>
+          <pre
+            style={{
+              background: "#eef",
+              padding: "1rem",
+              borderRadius: "8px",
+              overflow: "auto",
+            }}
+          >{`<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -95,8 +112,14 @@ export default function EstructuraCarpetasArchivosPage() {
         <h2>4. login.html (en carpeta pages/)</h2>
         <div className="componente">
           <p>Página con formulario de login.</p>
-          <pre style={{ background: "#eef", padding: "1rem", borderRadius: "8px", overflow: "auto" }}>
-{`<!DOCTYPE html>
+          <pre
+            style={{
+              background: "#eef",
+              padding: "1rem",
+              borderRadius: "8px",
+              overflow: "auto",
+            }}
+          >{`<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -123,8 +146,14 @@ export default function EstructuraCarpetasArchivosPage() {
         <h2>5. datos.html (en carpeta pages/)</h2>
         <div className="componente">
           <p>Página a la que se redirige después del login.</p>
-          <pre style={{ background: "#eef", padding: "1rem", borderRadius: "8px", overflow: "auto" }}>
-{`<!DOCTYPE html>
+          <pre
+            style={{
+              background: "#eef",
+              padding: "1rem",
+              borderRadius: "8px",
+              overflow: "auto",
+            }}
+          >{`<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -145,8 +174,14 @@ export default function EstructuraCarpetasArchivosPage() {
         <h2>6. pasatiempos.html (en carpeta pages/)</h2>
         <div className="componente">
           <p>Página de pasatiempos.</p>
-          <pre style={{ background: "#eef", padding: "1rem", borderRadius: "8px", overflow: "auto" }}>
-{`<!DOCTYPE html>
+          <pre
+            style={{
+              background: "#eef",
+              padding: "1rem",
+              borderRadius: "8px",
+              overflow: "auto",
+            }}
+          >{`<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -171,8 +206,14 @@ export default function EstructuraCarpetasArchivosPage() {
         <h2>7. login.js (en carpeta js/)</h2>
         <div className="componente">
           <p>Lógica simple del login.</p>
-          <pre style={{ background: "#eef", padding: "1rem", borderRadius: "8px", overflow: "auto" }}>
-{`// login.js
+          <pre
+            style={{
+              background: "#eef",
+              padding: "1rem",
+              borderRadius: "8px",
+              overflow: "auto",
+            }}
+          >{`// login.js
 document.getElementById("loginForm").addEventListener("submit", function(e) {
     e.preventDefault();
 
@@ -249,9 +290,15 @@ ul {
         <h2>9. Imágenes (en carpeta images/)</h2>
         <p>Guardá ahí cualquier imagen con nombres como:</p>
         <ul>
-          <li><code>logo.png</code> → para el index.</li>
-          <li><code>fondo.jpg</code> → si querés un fondo.</li>
-          <li><code>hobbie.jpg</code> → para pasatiempos.</li>
+          <li>
+            <code>logo.png</code> → para el index.
+          </li>
+          <li>
+            <code>fondo.jpg</code> → si querés un fondo.
+          </li>
+          <li>
+            <code>hobbie.jpg</code> → para pasatiempos.
+          </li>
         </ul>
       </section>
 
@@ -259,17 +306,30 @@ ul {
       <section className="clase-seccion cuadro-rebote" data-aos="fade-up">
         <h2>10. ¡Listo para navegar!</h2>
         <p className="conclusion">
-          ✅ Con esto ya tenés un proyecto completo, ordenado y sencillo.<br />
+          ✅ Con esto ya tenés un proyecto completo, ordenado y sencillo.
+          <br />
           Abrí <code>index.html</code> en el navegador y navegá entre páginas.
         </p>
       </section>
 
       {/* ✅ Botón dinámico */}
-      <div className="clase-seccion cuadro-rebote clase-footer" data-aos="fade-up">
+      <div
+        className="clase-seccion cuadro-rebote clase-footer"
+        data-aos="fade-up"
+      >
         <Link href={`/alumno/clases?grado=${grado}`} className="clase-btn">
           Volver a las clases
         </Link>
       </div>
     </div>
+  );
+}
+
+// 👉 Export principal con Suspense
+export default function EstructuraCarpetasArchivosPage() {
+  return (
+    <Suspense fallback={<div>Cargando...</div>}>
+      <EstructuraCarpetasArchivosContent />
+    </Suspense>
   );
 }

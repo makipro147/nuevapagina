@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "./clase-completa.css";
 import Link from "next/link";
 import useGradoFromUrl from "@/hooks/useGradoFromUrl";
 
-export default function IndicacionesProyectoPage() {
+function ContenidoIndicaciones() {
   const grado = useGradoFromUrl(); // 👉 grado real del alumno
 
   useEffect(() => {
@@ -45,7 +45,10 @@ export default function IndicacionesProyectoPage() {
           <ol>
             <li>Escribí una frase que empiece con <strong>PORQUE…</strong></li>
             <li>Usá letras mayúsculas si querés destacar.</li>
-            <li>Ejemplos: <code>PORQUE ME GUSTA</code> / <code>PORQUE ES IMPORTANTE PARA MI BARRIO</code>.</li>
+            <li>
+              Ejemplos: <code>PORQUE ME GUSTA</code> /{" "}
+              <code>PORQUE ES IMPORTANTE PARA MI BARRIO</code>.
+            </li>
           </ol>
         </div>
       </section>
@@ -58,7 +61,9 @@ export default function IndicacionesProyectoPage() {
           <ol>
             <li>Que sea una <strong>pregunta, reto o invitación</strong>.</li>
             <li>Máximo 14 palabras.</li>
-            <li>Incluí el tema. Ej.: <code>¿Por qué el fútbol une a mi barrio?</code></li>
+            <li>
+              Incluí el tema. Ej.: <code>¿Por qué el fútbol une a mi barrio?</code>
+            </li>
           </ol>
         </div>
       </section>
@@ -77,7 +82,7 @@ export default function IndicacionesProyectoPage() {
         </div>
       </section>
 
-      {/* Sección 5 – Plantilla para copiar y completar */}
+      {/* Sección 5 – Plantilla */}
       <section className="clase-seccion" data-aos="fade-up">
         <h2>5. Plantilla para copiar y completar</h2>
         <div className="componente" data-aos="fade-right">
@@ -105,11 +110,12 @@ ARGUMENTO:
         </div>
       </section>
 
-      {/* Sección 6 – Resumen y entrega */}
+      {/* Sección 6 – Resumen */}
       <section className="clase-seccion" data-aos="fade-up">
         <h2>6. Resumen y entrega</h2>
         <p className="conclusion">
-          Ya tenés todo: tema, justificación, título y argumento.<br />
+          Ya tenés todo: tema, justificación, título y argumento.
+          <br />
           ✅ <strong>Actividad:</strong> seguí la plantilla y guardá tu doc en Word.
         </p>
       </section>
@@ -121,5 +127,13 @@ ARGUMENTO:
         </Link>
       </div>
     </div>
+  );
+}
+
+export default function IndicacionesProyectoPage() {
+  return (
+    <Suspense fallback={<p>Cargando contenido...</p>}>
+      <ContenidoIndicaciones />
+    </Suspense>
   );
 }

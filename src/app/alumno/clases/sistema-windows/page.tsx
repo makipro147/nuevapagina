@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "./clase-completa.css";
 import Link from "next/link";
 import useGradoFromUrl from "@/hooks/useGradoFromUrl";
 
-export default function WindowsPage() {
+function WindowsContent() {
   const grado = useGradoFromUrl(); // 👉 grado real del alumno
 
   useEffect(() => {
@@ -145,5 +145,13 @@ export default function WindowsPage() {
         </Link>
       </div>
     </div>
+  );
+}
+
+export default function WindowsPage() {
+  return (
+    <Suspense fallback={<p className="loading">Cargando contenido...</p>}>
+      <WindowsContent />
+    </Suspense>
   );
 }

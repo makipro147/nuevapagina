@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "./clase-completa.css";
 import Link from "next/link";
 import useGradoFromUrl from "@/hooks/useGradoFromUrl";
 
-export default function LenguajesProgramacionPage() {
+function LenguajesProgramacionContent() {
   const grado = useGradoFromUrl(); // 👉 grado real del alumno
 
   useEffect(() => {
@@ -31,7 +31,10 @@ export default function LenguajesProgramacionPage() {
           Es un idioma especial que usamos para dar instrucciones a la computadora y que realice tareas.
         </p>
         <ul>
-          <li>👉 Así como hablamos español o inglés para comunicarnos con las personas, usamos lenguajes de programación para comunicarnos con las computadoras.</li>
+          <li>
+            👉 Así como hablamos español o inglés para comunicarnos con las personas, 
+            usamos lenguajes de programación para comunicarnos con las computadoras.
+          </li>
         </ul>
       </section>
 
@@ -93,7 +96,10 @@ export default function LenguajesProgramacionPage() {
         <h2>6. Actividad práctica para los alumnos</h2>
         <div className="componente">
           <h3>Explicación sencilla en clase:</h3>
-          <p>Hacer la comparación: “El profe da instrucciones, ustedes las cumplen. Igual pasa con las computadoras”.</p>
+          <p>
+            Hacer la comparación: “El profe da instrucciones, ustedes las cumplen. 
+            Igual pasa con las computadoras”.
+          </p>
           <h3>En la computadora (opcional con Scratch o Python online):</h3>
           <ul>
             <li>Escribir un programa que muestre un mensaje, por ejemplo:</li>
@@ -125,5 +131,13 @@ export default function LenguajesProgramacionPage() {
         </Link>
       </div>
     </div>
+  );
+}
+
+export default function LenguajesProgramacionPage() {
+  return (
+    <Suspense fallback={<p className="loading">Cargando contenido...</p>}>
+      <LenguajesProgramacionContent />
+    </Suspense>
   );
 }

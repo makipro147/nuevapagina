@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 import "./profesor.css";
 
-export default function ProfesorPage() {
+function ProfesorContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [alumnos, setAlumnos] = useState<any[]>([]);
@@ -41,7 +41,7 @@ export default function ProfesorPage() {
         router.push("/");
       }
     }
-  }, []);
+  }, [searchParams, router]); // ✅ dependencias añadidas
 
   const fetchAlumnos = async (g: number) => {
     const { data } = await supabase
@@ -149,7 +149,6 @@ export default function ProfesorPage() {
 
         <div className="profesor-buttons-top">
           <button onClick={handleAgregar} className="profesor-btn">Agregar alumno</button>
-           {/* Comentario: Botón para ver las clases del grado actual */}
           <button onClick={handleVerClases} className="profesor-btn">Ver clases</button>
           <button onClick={handleSalir} className="profesor-btn">Salir</button>
         </div>
@@ -167,9 +166,21 @@ export default function ProfesorPage() {
           <tbody>
             {alumnos.map((a) => (
               <tr key={a.id}>
-                <td>{editando === a.id ? <input value={form.nombre} onChange={(e) => setForm({ ...form, nombre: e.target.value })} className="profesor-input" /> : a.nombre}</td>
-                <td>{editando === a.id ? <input value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="profesor-input" /> : a.usuarios.email}</td>
-                <td>{editando === a.id ? <input value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} className="profesor-input" /> : a.usuarios.password}</td>
+                <td>
+                  {editando === a.id
+                    ? <input value={form.nombre} onChange={(e) => setForm({ ...form, nombre: e.target.value })} className="profesor-input" />
+                    : a.nombre}
+                </td>
+                <td>
+                  {editando === a.id
+                    ? <input value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="profesor-input" />
+                    : a.usuarios.email}
+                </td>
+                <td>
+                  {editando === a.id
+                    ? <input value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} className="profesor-input" />
+                    : a.usuarios.password}
+                </td>
                 <td>{a.puntos || 0}</td>
                 <td className="profesor-actions">
                   {editando === a.id ? (
@@ -211,5 +222,13 @@ export default function ProfesorPage() {
         </div>
       )}
     </>
+  );
+}
+
+export default function ProfesorPage() {
+  return (
+    <Suspense fallback={<div>Cargando...</div>}>
+      <ProfesorContent />
+    </Suspense>
   );
 }

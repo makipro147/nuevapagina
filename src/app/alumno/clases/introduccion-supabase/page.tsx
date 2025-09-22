@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "./clase-completa.css";
 import Link from "next/link";
 import useGradoFromUrl from "@/hooks/useGradoFromUrl";
 
-export default function IntroduccionSupabasePage() {
+// ✅ Componente interno envuelto en Suspense
+function IntroduccionSupabaseContent() {
   const grado = useGradoFromUrl(); // 👉 grado real del alumno
 
   useEffect(() => {
@@ -27,9 +28,7 @@ export default function IntroduccionSupabasePage() {
       {/* Sección 1 – ¿Qué es Supabase? */}
       <section className="clase-seccion cuadro-rebote" data-aos="fade-up">
         <h2>1. ¿Qué es Supabase?</h2>
-        <p>
-          Supabase es una plataforma que ofrece:
-        </p>
+        <p>Supabase es una plataforma que ofrece:</p>
         <ul>
           <li>Base de datos PostgreSQL en la nube (gratis en plan básico).</li>
           <li>Autenticación de usuarios (con email, contraseña, Google, GitHub, etc.).</li>
@@ -43,7 +42,16 @@ export default function IntroduccionSupabasePage() {
       <section className="clase-seccion cuadro-rebote" data-aos="fade-up">
         <h2>2. Crear cuenta en Supabase</h2>
         <ol>
-          <li>Ir a <a href="https://supabase.com/" target="_blank" rel="noopener noreferrer">https://supabase.com/</a></li>
+          <li>
+            Ir a{" "}
+            <a
+              href="https://supabase.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              https://supabase.com/
+            </a>
+          </li>
           <li>Registrate con Google o GitHub.</li>
           <li>Crear un nuevo proyecto (elegí nombre y contraseña de la base de datos).</li>
           <li>Se abrirá el Dashboard de tu proyecto.</li>
@@ -56,15 +64,25 @@ export default function IntroduccionSupabasePage() {
         <ol>
           <li>En el menú izquierdo, entrá a <strong>Table Editor</strong>.</li>
           <li>Hacé clic en <strong>New Table</strong>.</li>
-          <li>Configurá la tabla:
+          <li>
+            Configurá la tabla:
             <ul>
-              <li><strong>Name:</strong> usuarios</li>
-              <li><strong>Primary Key:</strong> id (tipo uuid, marcado como primary key)</li>
-              <li><strong>Columnas:</strong>
+              <li>
+                <strong>Name:</strong> usuarios
+              </li>
+              <li>
+                <strong>Primary Key:</strong> id (tipo uuid, marcado como primary
+                key)
+              </li>
+              <li>
+                <strong>Columnas:</strong>
                 <ul>
                   <li>usuario → text (obligatorio)</li>
                   <li>contrasena → text (obligatorio)</li>
-                  <li>(Opcional: fecha_creacion → timestamp con valor por defecto now())</li>
+                  <li>
+                    (Opcional: fecha_creacion → timestamp con valor por defecto
+                    now())
+                  </li>
                 </ul>
               </li>
             </ul>
@@ -77,21 +95,34 @@ export default function IntroduccionSupabasePage() {
       <section className="clase-seccion cuadro-rebote" data-aos="fade-up">
         <h2>4. Obtener la API Key y URL</h2>
         <ol>
-          <li>En el Dashboard, andá a <strong>Settings → API</strong>.</li>
-          <li>Copiá:
+          <li>
+            En el Dashboard, andá a <strong>Settings → API</strong>.
+          </li>
+          <li>
+            Copiá:
             <ul>
-              <li><strong>Project URL</strong> (empieza con https://xxxx.supabase.co)</li>
-              <li><strong>anon public key</strong> (clave pública)</li>
+              <li>
+                <strong>Project URL</strong> (empieza con
+                https://xxxx.supabase.co)
+              </li>
+              <li>
+                <strong>anon public key</strong> (clave pública)
+              </li>
             </ul>
           </li>
         </ol>
-        <p className="tip">👉 Estas las usarás en tu proyecto para conectarte desde JavaScript.</p>
+        <p className="tip">
+          👉 Estas las usarás en tu proyecto para conectarte desde JavaScript.
+        </p>
       </section>
 
       {/* Sección 5 – Conectar mini-proyecto */}
       <section className="clase-seccion cuadro-rebote" data-aos="fade-up">
         <h2>5. Conectar mini-proyecto a Supabase</h2>
-        <p>En tu carpeta <code>js/</code>, creá un archivo <code>supabaseClient.js</code>:</p>
+        <p>
+          En tu carpeta <code>js/</code>, creá un archivo{" "}
+          <code>supabaseClient.js</code>:
+        </p>
         <div className="componente">
           <pre>{`// supabaseClient.js
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
@@ -157,21 +188,34 @@ document.getElementById("loginForm").addEventListener("submit", async function (
         </div>
       </section>
 
-    <div className="conclusion">
-  ✅ Con esto, tu mini-proyecto ya está conectado a una base de datos real en la nube.<br />
-  Los alumnos podrán:
-  <ul>
-    <li>Registrarse (si hacés un formulario de registro).</li>
-    <li>Iniciar sesión (con el login).</li>
-  </ul>
-</div>
+      <div className="conclusion">
+        ✅ Con esto, tu mini-proyecto ya está conectado a una base de datos real en la nube.
+        <br />
+        Los alumnos podrán:
+        <ul>
+          <li>Registrarse (si hacés un formulario de registro).</li>
+          <li>Iniciar sesión (con el login).</li>
+        </ul>
+      </div>
 
       {/* ✅ Botón dinámico */}
-      <div className="clase-seccion cuadro-rebote clase-footer" data-aos="fade-up">
+      <div
+        className="clase-seccion cuadro-rebote clase-footer"
+        data-aos="fade-up"
+      >
         <Link href={`/alumno/clases?grado=${grado}`} className="clase-btn">
           Volver a las clases
         </Link>
       </div>
     </div>
+  );
+}
+
+// ✅ Export final con Suspense
+export default function IntroduccionSupabasePage() {
+  return (
+    <Suspense fallback={<div>Cargando...</div>}>
+      <IntroduccionSupabaseContent />
+    </Suspense>
   );
 }

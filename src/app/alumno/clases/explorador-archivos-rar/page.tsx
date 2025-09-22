@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "./clase-completa.css";
 import Link from "next/link";
 import useGradoFromUrl from "@/hooks/useGradoFromUrl";
 
-export default function ExploradorArchivosRARPage() {
+function ExploradorArchivosRARContent() {
   const grado = useGradoFromUrl(); // 👉 grado real del alumno
 
   useEffect(() => {
@@ -121,5 +121,13 @@ export default function ExploradorArchivosRARPage() {
         </Link>
       </div>
     </div>
+  );
+}
+
+export default function ExploradorArchivosRARPage() {
+  return (
+    <Suspense fallback={<div>Cargando...</div>}>
+      <ExploradorArchivosRARContent />
+    </Suspense>
   );
 }
