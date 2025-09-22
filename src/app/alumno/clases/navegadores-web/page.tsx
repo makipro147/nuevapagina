@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "./clase-completa.css";
@@ -8,12 +8,13 @@ import Carrusel3D from "./Carrusel3D.jsx";
 import Link from "next/link";
 import useGradoFromUrl from "@/hooks/useGradoFromUrl";
 
-export default function NavegadoresWebPage() {
-  const grado = useGradoFromUrl(); // 👉 grado real del alumno
+// 👉 Contenido principal
+function NavegadoresWebPageContent() {
+  const grado = useGradoFromUrl(); // grado real del alumno
 
   useEffect(() => {
     AOS.init({ duration: 1000, once: true });
-  }, []);
+  }, []); // ✅ solo corre una vez
 
   return (
     <div className="clase-completa-container">
@@ -25,7 +26,7 @@ export default function NavegadoresWebPage() {
         </p>
       </section>
 
-      {/* Sección 1 – ¿Qué es un navegador web? */}
+      {/* Sección 1 */}
       <section className="clase-seccion cuadro-rebote" data-aos="fade-up">
         <h2>1. ¿Qué es un navegador web?</h2>
         <p>
@@ -37,7 +38,7 @@ export default function NavegadoresWebPage() {
         </ul>
       </section>
 
-      {/* Sección 2 – Los navegadores más usados */}
+      {/* Sección 2 */}
       <section className="clase-seccion cuadro-rebote" data-aos="fade-up">
         <h2>2. Los navegadores más usados</h2>
         <ul>
@@ -49,7 +50,7 @@ export default function NavegadoresWebPage() {
         </ul>
       </section>
 
-      {/* Sección 3 – Partes principales de un navegador */}
+      {/* Sección 3 */}
       <section className="clase-seccion cuadro-rebote" data-aos="fade-up">
         <h2>3. Partes principales de un navegador web</h2>
         <ul>
@@ -63,7 +64,7 @@ export default function NavegadoresWebPage() {
         </ul>
       </section>
 
-      {/* Sección 4 – ¿Para qué sirve? */}
+      {/* Sección 4 */}
       <section className="clase-seccion cuadro-rebote" data-aos="fade-up">
         <h2>4. ¿Para qué sirve un navegador web?</h2>
         <ul>
@@ -75,7 +76,7 @@ export default function NavegadoresWebPage() {
         </ul>
       </section>
 
-      {/* Sección 5 – Diferencia entre navegador y buscador */}
+      {/* Sección 5 */}
       <section className="clase-seccion cuadro-rebote" data-aos="fade-up">
         <h2>5. Diferencia entre navegador y buscador</h2>
         <div className="componente">
@@ -88,7 +89,7 @@ export default function NavegadoresWebPage() {
         </div>
       </section>
 
-      {/* Sección 6 – Ventajas */}
+      {/* Sección 6 */}
       <section className="clase-seccion cuadro-rebote" data-aos="fade-up">
         <h2>6. Ventajas de los navegadores</h2>
         <ul>
@@ -99,7 +100,7 @@ export default function NavegadoresWebPage() {
         </ul>
       </section>
 
-      {/* Sección 7 – Actividad para los alumnos */}
+      {/* Sección 7 */}
       <section className="clase-seccion cuadro-rebote" data-aos="fade-up">
         <h2>7. Actividad para los alumnos</h2>
         <div className="componente">
@@ -123,7 +124,7 @@ export default function NavegadoresWebPage() {
         </div>
       </section>
 
-      {/* Sección 8 – Resumen fácil */}
+      {/* Sección 8 */}
       <section className="clase-seccion cuadro-rebote" data-aos="fade-up">
         <h2>8. Resumen fácil de recordar</h2>
         <p className="conclusion">
@@ -133,16 +134,25 @@ export default function NavegadoresWebPage() {
           👉 No confundir: navegador ≠ buscador.
         </p>
       </section>
-      
-        {/* Carrusel 3D al final */}
-            <Carrusel3D />
 
-      {/* ✅ Botón dinámico */}
+      {/* Carrusel 3D */}
+      <Carrusel3D />
+
+      {/* Botón dinámico */}
       <div className="clase-seccion cuadro-rebote clase-footer" data-aos="fade-up">
         <Link href={`/alumno/clases?grado=${grado}`} className="clase-btn">
           Volver a las clases
         </Link>
       </div>
     </div>
+  );
+}
+
+// 👉 Exporta con Suspense para evitar error en build
+export default function NavegadoresWebPage() {
+  return (
+    <Suspense fallback={<div>Cargando clase...</div>}>
+      <NavegadoresWebPageContent />
+    </Suspense>
   );
 }

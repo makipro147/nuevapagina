@@ -1,22 +1,19 @@
 "use client";
 import "./login.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 import Link from "next/link";
 
 const allowedEmails = ["rojasmichael148@gmail.com"];
 
-export default function LoginPage() {
+function LoginContent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [grado, setGrado] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
-
-  // ✅ Validar que esté montado
-  if (!router || !searchParams) return null;
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -28,10 +25,7 @@ export default function LoginPage() {
     const checkGoogleUser = async () => {
       try {
         const { data, error } = await supabase.auth.getUser();
-        if (error) {
-          // ✅ No hay sesión, no hacemos nada
-          return;
-        }
+        if (error) return;
 
         const user = data?.user;
         if (user?.email) {
@@ -40,7 +34,10 @@ export default function LoginPage() {
             await supabase.auth.signOut();
             router.push("/");
           } else {
-            localStorage.setItem("user", JSON.stringify({ email: user.email, rol: "profesor" }));
+            localStorage.setItem(
+              "user",
+              JSON.stringify({ email: user.email, rol: "profesor" })
+            );
             const grado = params.get("grado");
             if (grado && ["1", "2", "3", "4", "5"].includes(grado)) {
               router.push(`/profesor?grado=${grado}`);
@@ -98,7 +95,9 @@ export default function LoginPage() {
   const loginWithGoogle = async () => {
     try {
       const grado = searchParams.get("grado");
-      const redirectTo = `${window.location.origin}/login${grado ? `?grado=${grado}` : ""}`;
+      const redirectTo = `${window.location.origin}/login${
+        grado ? `?grado=${grado}` : ""
+      }`;
       await supabase.auth.signInWithOAuth({
         provider: "google",
         options: { redirectTo },
@@ -149,7 +148,11 @@ export default function LoginPage() {
         </div>
 
         {!grado && (
-          <select className="login-select" value={grado} onChange={(e) => setGrado(e.target.value)}>
+          <select
+            className="login-select"
+            value={grado}
+            onChange={(e) => setGrado(e.target.value)}
+          >
             <option value="">Selecciona tu grado</option>
             <option value="1">1º de secundaria</option>
             <option value="2">2º de secundaria</option>
@@ -159,9 +162,7 @@ export default function LoginPage() {
           </select>
         )}
 
-        {grado && (
-          <p className="login-grado-text">Grado seleccionado: {grado}º</p>
-        )}
+        {grado && <p className="login-grado-text">Grado seleccionado: {grado}º</p>}
 
         <button onClick={login} className="login-btn">
           Entrar
@@ -172,5 +173,13 @@ export default function LoginPage() {
         </button>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div>Cargando...</div>}>
+      <LoginContent />
+    </Suspense>
   );
 }

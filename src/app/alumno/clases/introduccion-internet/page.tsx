@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "./clase-completa.css";
 import Link from "next/link";
 import useGradoFromUrl from "@/hooks/useGradoFromUrl";
 
-export default function IntroduccionInternetPage() {
+function IntroduccionInternetContent() {
   const grado = useGradoFromUrl(); // 👉 grado real del alumno
 
   useEffect(() => {
@@ -117,12 +117,26 @@ export default function IntroduccionInternetPage() {
           </ul>
           <h3>En la computadora:</h3>
           <ul>
-            <li>Abrir un navegador y entrar a <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">www.google.com</a>.</li>
-            <li>Buscar: <strong>“Historia del Internet”</strong> y anotar un dato curioso.</li>
+            <li>
+              Abrir un navegador y entrar a{" "}
+              <a
+                href="https://www.google.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                www.google.com
+              </a>.
+            </li>
+            <li>
+              Buscar: <strong>“Historia del Internet”</strong> y anotar un dato curioso.
+            </li>
           </ul>
           <h3>Dinámica grupal:</h3>
           <ul>
-            <li>Cada grupo arma un afiche en Canva sobre <strong>“Cómo usar Internet de manera segura”</strong>.</li>
+            <li>
+              Cada grupo arma un afiche en Canva sobre{" "}
+              <strong>“Cómo usar Internet de manera segura”</strong>.
+            </li>
           </ul>
         </div>
       </section>
@@ -139,11 +153,22 @@ export default function IntroduccionInternetPage() {
       </section>
 
       {/* ✅ Botón dinámico */}
-      <div className="clase-seccion cuadro-rebote clase-footer" data-aos="fade-up">
+      <div
+        className="clase-seccion cuadro-rebote clase-footer"
+        data-aos="fade-up"
+      >
         <Link href={`/alumno/clases?grado=${grado}`} className="clase-btn">
           Volver a las clases
         </Link>
       </div>
     </div>
+  );
+}
+
+export default function IntroduccionInternetPage() {
+  return (
+    <Suspense fallback={<div className="cargando">⏳ Cargando clase...</div>}>
+      <IntroduccionInternetContent />
+    </Suspense>
   );
 }

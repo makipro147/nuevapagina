@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 import "./agregar.css";
 
-export default function AgregarAlumnoPage() {
+function AgregarAlumnoForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const grado = searchParams.get("grado");
@@ -123,5 +123,14 @@ export default function AgregarAlumnoPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+// 👉 Aquí va el Suspense para evitar el error
+export default function AgregarAlumnoPage() {
+  return (
+    <Suspense fallback={<div>Cargando...</div>}>
+      <AgregarAlumnoForm />
+    </Suspense>
   );
 }

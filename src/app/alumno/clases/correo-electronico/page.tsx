@@ -1,17 +1,19 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "./clase-completa.css";
 import Link from "next/link";
 import useGradoFromUrl from "@/hooks/useGradoFromUrl";
 
-export default function CorreoElectronicoPage() {
-  const grado = useGradoFromUrl(); // 👉 grado real del alumno
+// 👉 Componente con toda la lógica y contenido
+function CorreoElectronicoContent() {
+  const grado = useGradoFromUrl(); // ✅ grado real del alumno
 
   useEffect(() => {
     AOS.init({ duration: 1000, once: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -153,5 +155,14 @@ export default function CorreoElectronicoPage() {
         </Link>
       </div>
     </div>
+  );
+}
+
+// 👉 Export principal con Suspense (requerido en Next.js 15+ para useSearchParams)
+export default function CorreoElectronicoPage() {
+  return (
+    <Suspense fallback={<div>Cargando...</div>}>
+      <CorreoElectronicoContent />
+    </Suspense>
   );
 }
