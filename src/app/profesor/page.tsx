@@ -121,14 +121,34 @@ function ProfesorContent() {
       return;
     }
 
-    const nuevosPuntos =
-      modalPuntos.tipo === "subir"
-        ? modalPuntos.puntosActuales + cantidad
-        : Math.max(modalPuntos.puntosActuales - cantidad, 0);
+    try {
+      const nuevosPuntos =
+        modalPuntos.tipo === "subir"
+          ? modalPuntos.puntosActuales + cantidad
+          : Math.max(modalPuntos.puntosActuales - cantidad, 0);
 
-    await supabase.from("alumnos").update({ puntos: nuevosPuntos }).eq("id", modalPuntos.alumnoId);
-    cerrarModalPuntos();
-    if (grado) fetchAlumnos(grado);
+      const { error } = await supabase
+        .from("alumnos")
+        .update({ puntos: nuevosPuntos })
+        .eq("id", modalPuntos.alumnoId);
+
+      if (error) {
+        console.error("Error updating points:", error);
+        alert("Error al actualizar los puntos: " + error.message);
+        return;
+      }
+
+      // Success feedback
+      alert(
+        `Puntos ${modalPuntos.tipo === "subir" ? "aumentados" : "reducidos"} correctamente. Nuevos puntos: ${nuevosPuntos}`
+      );
+
+      cerrarModalPuntos();
+      if (grado) fetchAlumnos(grado);
+    } catch (err) {
+      console.error("Unexpected error updating points:", err);
+      alert("Ocurrió un error inesperado al actualizar los puntos");
+    }
   };
 
   const handleSalir = () => {
