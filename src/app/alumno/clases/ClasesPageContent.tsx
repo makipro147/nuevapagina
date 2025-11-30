@@ -3,6 +3,8 @@
 import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import "./clases.css";
 
 /* ===== 1º-3º ===== */
@@ -44,8 +46,16 @@ export default function ClasesPageContent() {
   const searchParams = useSearchParams();
   const grado = searchParams.get("grado");
 
-  /* ---------- Captura de errores ---------- */
+  /* ---------- Initialize AOS and Error handling ---------- */
   useEffect(() => {
+    // Initialize AOS for animations
+    AOS.init({
+      duration: 1000,
+      once: true,
+      easing: 'ease-in-out'
+    });
+
+    // Error handlers
     const handleError = (ev: ErrorEvent) => {
       const msg = ev.error?.message ?? ev.message ?? "Error desconocido";
       console.error("❌ Error capturado:", ev.error || ev);
@@ -58,8 +68,8 @@ export default function ClasesPageContent() {
         reason instanceof Error
           ? reason.message
           : typeof reason === "string"
-          ? reason
-          : JSON.stringify(reason);
+            ? reason
+            : JSON.stringify(reason);
       console.error("❌ Promesa rechazada:", reason);
       alert("Error: " + msg);
     };
@@ -68,6 +78,8 @@ export default function ClasesPageContent() {
     window.addEventListener("unhandledrejection", handleRejection);
 
     return () => {
+      // Refresh AOS on unmount to clean up
+      AOS.refresh();
       window.removeEventListener("error", handleError);
       window.removeEventListener("unhandledrejection", handleRejection);
     };

@@ -57,11 +57,17 @@ function LoginContent() {
 
   const login = async () => {
     try {
+      // Validate inputs
+      if (!email || !password) {
+        alert("Por favor, ingresa correo y contraseña");
+        return;
+      }
+
+      // Fetch user by email only
       const { data: user, error } = await supabase
         .from("usuarios")
         .select("*")
         .eq("email", email)
-        .eq("password", password)
         .single();
 
       if (error || !user) {
@@ -69,8 +75,44 @@ function LoginContent() {
         return;
       }
 
+      // Verify password
+      let passwordValid = false;
+
+      if (user.password_hash) {
+        // New system: use bcrypt hash verification
+        const { verifyPassword } = await import("@/lib/authHelpers");
+        passwordValid = await verifyPassword(password, user.password_hash);
+      } else if (user.password) {
+        // Legacy system: plaintext comparison (for backward compatibility)
+        // This should be removed after all passwords are migrated
+        passwordValid = user.password === password;
+
+        // Auto-migrate this password to hashed format
+        if (passwordValid) {
+          const { hashPassword } = await import("@/lib/authHelpers");
+          const hash = await hashPassword(password);
+          await supabase
+            .from("usuarios")
+            .update({ password_hash: hash })
+            .eq("id", user.id);
+        }
+      } else {
+        alert("Error en la configuración de la cuenta");
+        return;
+      }
+
+      if (!passwordValid) {
+        alert("Credenciales incorrectas");
+        return;
+      }
+
+      // Password is correct, proceed with login
       if (user.rol === "profesor") {
-        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("user", JSON.stringify({
+          id: user.id,
+          email: user.email,
+          rol: user.rol
+        }));
         const gradoURL = searchParams.get("grado");
         if (gradoURL && ["1", "2", "3", "4", "5"].includes(gradoURL)) {
           router.push(`/profesor?grado=${gradoURL}`);
@@ -82,7 +124,11 @@ function LoginContent() {
           alert("Selecciona un grado");
           return;
         }
-        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("user", JSON.stringify({
+          id: user.id,
+          email: user.email,
+          rol: user.rol
+        }));
         localStorage.setItem("grado", grado);
         router.push(`/alumno?grado=${grado}`);
       }
