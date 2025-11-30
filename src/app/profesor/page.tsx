@@ -11,7 +11,7 @@ function ProfesorContent() {
   const [alumnos, setAlumnos] = useState<any[]>([]);
   const [grado, setGrado] = useState<number | null>(null);
   const [editando, setEditando] = useState<string | null>(null);
-  const [form, setForm] = useState({ nombre: "", email: "", password: "", telefono: "", edad: "" });
+  const [form, setForm] = useState({ nombre: "", email: "", telefono: "", edad: "" });
 
   // Modal de puntos
   const [modalPuntos, setModalPuntos] = useState<{
@@ -56,7 +56,6 @@ function ProfesorContent() {
     setForm({
       nombre: alumno.nombre,
       email: alumno.usuarios.email,
-      password: alumno.usuarios.password,
       telefono: alumno.telefono,
       edad: alumno.edad,
     });
@@ -89,7 +88,6 @@ function ProfesorContent() {
 
     await supabase.from("usuarios").update({
       email: form.email,
-      password: form.password,
     }).eq("id", usuarioId);
 
     setEditando(null);
@@ -158,7 +156,8 @@ function ProfesorContent() {
             <tr>
               <th>Nombre</th>
               <th>Usuario (email)</th>
-              <th>Contraseña</th>
+              <th>Teléfono</th>
+              <th>Edad</th>
               <th>Puntos</th>
               <th>Acciones</th>
             </tr>
@@ -178,8 +177,13 @@ function ProfesorContent() {
                 </td>
                 <td>
                   {editando === a.id
-                    ? <input value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} className="profesor-input" />
-                    : a.usuarios.password}
+                    ? <input value={form.telefono} onChange={(e) => setForm({ ...form, telefono: e.target.value })} className="profesor-input" />
+                    : a.telefono || '-'}
+                </td>
+                <td>
+                  {editando === a.id
+                    ? <input type="number" value={form.edad} onChange={(e) => setForm({ ...form, edad: e.target.value })} className="profesor-input" />
+                    : a.edad || '-'}
                 </td>
                 <td>{a.puntos || 0}</td>
                 <td className="profesor-actions">

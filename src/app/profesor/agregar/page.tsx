@@ -29,13 +29,57 @@ function AgregarAlumnoForm() {
     }
 
     try {
-      // 1️⃣ Insertar usuario en tabla 'usuarios' directamente
+      // Import validation functions
+      const { validateEmail, validatePassword, validatePhone, validateAge, hashPassword, sanitizeInput } = await import("@/lib/authHelpers");
+
+      // Validate email format
+      if (!validateEmail(form.email)) {
+        alert("Por favor, ingresa un correo electrónico válido");
+        return;
+      }
+
+      // Validate password strength
+      const passwordValidation = validatePassword(form.password);
+      if (!passwordValidation.isValid) {
+        alert("La contraseña debe:\n" + passwordValidation.errors.join("\n"));
+        return;
+      }
+
+      // Validate age
+      const edad = parseInt(form.edad);
+      if (!validateAge(edad)) {
+        alert("La edad debe estar entre 12 y 20 años");
+        return;
+      }
+
+      // Validate phone if provided
+      if (form.telefono && !validatePhone(form.telefono)) {
+        alert("Por favor, ingresa un número de teléfono válido");
+        return;
+      }
+
+      // Check for duplicate email
+      const { data: existing } = await supabase
+        .from("usuarios")
+        .select("id")
+        .eq("email", form.email)
+        .single();
+
+      if (existing) {
+        alert("Este correo ya está registrado");
+        return;
+      }
+
+      // Hash the password
+      const passwordHash = await hashPassword(form.password);
+
+      // 1️⃣ Insert user into 'usuarios' table with hashed password
       const { data: usuario, error: userError } = await supabase
         .from("usuarios")
         .insert([
           {
-            email: form.email,
-            password: form.password,
+            email: sanitizeInput(form.email),
+            password_hash: passwordHash,
             rol: "alumno",
           },
         ])
@@ -47,13 +91,13 @@ function AgregarAlumnoForm() {
         return;
       }
 
-      // 2️⃣ Insertar datos en tabla 'alumnos'
+      // 2️⃣ Insert data into 'alumnos' table
       const { error: alumnoError } = await supabase.from("alumnos").insert([
         {
           usuario_id: usuario.id,
-          nombre: form.nombre,
-          edad: parseInt(form.edad),
-          telefono: form.telefono,
+          nombre: sanitizeInput(form.nombre),
+          edad: edad,
+          telefono: sanitizeInput(form.telefono || ""),
           grado: parseInt(grado as string),
         },
       ]);
